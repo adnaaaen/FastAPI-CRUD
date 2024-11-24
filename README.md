@@ -14,8 +14,8 @@ This project is a CRUD application for managing a library's book collection, bui
   [![Pip](https://img.shields.io/badge/Pip-24.0-blue)](https://pip.pypa.io/)
 </div>
 
-## 🚧 EndPoints
-![Screenshot 2024-07-15 115055](https://github.com/user-attachments/assets/32fe10b1-c4ea-4247-93b6-bacabb90a9c7)
+<!--## 🚧 EndPoints-->
+<!--![Screenshot 2024-07-15 115055](https://github.com/user-attachments/assets/32fe10b1-c4ea-4247-93b6-bacabb90a9c7)-->
 
 
 ## 🚀 Installation
