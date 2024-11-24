@@ -1,4 +1,4 @@
-from database import Base, engine, SessionLocal
+from database import Base, engine, get_db
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 import crud
@@ -12,15 +12,6 @@ from schemas import (
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
-
-
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
 
 @app.get("/api/users/list")
 async def list_all_users(
@@ -89,7 +80,3 @@ async def delete_user_by_id(user_id: int, db: Session = Depends(get_db)):
     return response if response else HTTPException(status_code=400)
 
 
-if __name__ == "__main__":
-    import uvicorn
-
-    uvicorn.run(app, host="127.0.0.1", port=8000, reload=True)

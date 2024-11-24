@@ -30,8 +30,8 @@ This project is a CRUD application for managing a library's book collection, bui
 2. **Create and activate a virtual environment**:
 
     ```sh
-    python -m venv venv
-    source venv/bin/activate # On Windows, use `venv\Scripts\activate`
+    python -m venv .venv
+    source .venv/bin/activate # On Windows, use `.venv\Scripts\activate`
     ```
 
 3. **Install the dependencies**:
@@ -45,13 +45,13 @@ This project is a CRUD application for managing a library's book collection, bui
 Create a `.env` file in the root directory of your project and add the following environment variables:
 
    ```sh
-    DATABASE_URL=sqlite:///database.db
+    DATABASE_URL="sqlite:///database.db"
 ```
 ## ⚙️ Running the Application
 
 1. **Start the FastAPI server**:
 ```bash
-fastapi dev main.py
+uvicorn main:app --reload --port 8000 --host localhost
 ```
 
 2. **Access the API documentation**:

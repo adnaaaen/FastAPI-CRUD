@@ -1,4 +1,5 @@
-import models
+from models import User, Book 
+
 from schemas import (
     UserCreateSchema,
     UpdateUserSchema,
@@ -10,11 +11,11 @@ from sqlalchemy.orm import Session
 
 # user crud
 def list_all_users(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(models.User).offset(skip).limit(limit).all()
+    return db.query(User).offset(skip).limit(limit).all()
 
 
 def create_user(db: Session, user: UserCreateSchema):
-    new_user = models.User(
+    new_user = User(
         name=user.name, email=user.email, contact_number=user.contact_number
     )
     db.add(new_user)
@@ -24,11 +25,11 @@ def create_user(db: Session, user: UserCreateSchema):
 
 
 def get_user_by_id(db: Session, user_id: int):
-    return db.query(models.User).filter(models.User.id == user_id).first()
+    return db.query(User).filter(User.id == user_id).first()
 
 
 def update_user_by_id(db: Session, user_id, user: UpdateUserSchema):
-    user_by_id = db.query(models.User).filter(models.User.id == user_id).first()
+    user_by_id = db.query(User).filter(User.id == user_id).first()
     if user_id:
         user_by_id.name = user.name if user.name else ...
         user_by_id.email = user.email if user.email else ...
@@ -40,7 +41,7 @@ def update_user_by_id(db: Session, user_id, user: UpdateUserSchema):
 
 
 def delete_by_id(db: Session, user_id: int):
-    user_by_id = db.query(models.User).filter(models.User.id == user_id).first()
+    user_by_id = db.query(User).filter(User.id == user_id).first()
     db.delete(user_by_id) if user_by_id else ...
     db.commit()
     return user_by_id
@@ -48,7 +49,7 @@ def delete_by_id(db: Session, user_id: int):
 
 # library crud
 def create_book_by_user(db: Session, book_data: LibraryCreateSchema):
-    new_book = models.Library(
+    new_book = Book(
         user_id=book_data.user_id,
         book_name=book_data.book_name,
         author=book_data.author,
@@ -62,17 +63,17 @@ def create_book_by_user(db: Session, book_data: LibraryCreateSchema):
 
 
 def get_all_book(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(models.Library).offset(skip).limit(limit).all()
+    return db.query(Book).offset(skip).limit(limit).all()
 
 
 def get_book_by_id(db: Session, book_id: int):
-    response = db.query(models.Library).filter(models.Library.book_id).first()
+    response = db.query(Book).filter(Book.book_id).first()
     return response
 
 
 def delete_book(db: Session, book_id: int):
     response = (
-        db.query(models.Library).filter(models.Library.book_id == book_id).first()
+        db.query(Book).filter(Book.book_id == book_id).first()
     )
     if response:
         db.delete(response)
@@ -81,7 +82,7 @@ def delete_book(db: Session, book_id: int):
 
 
 def update_book(db: Session, book_id: int, updated_book: LibraryCreateSchema):
-    data = db.query(models.Library).filter(models.Library.book_id == book_id).first()
+    data = db.query(Book).filter(Book.book_id == book_id).first()
     if data:
         data.book_name = updated_book.book_name
         data.author = updated_book.author
