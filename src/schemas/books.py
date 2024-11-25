@@ -6,7 +6,6 @@ class TBook(BaseModel):
     author: str
     department: str
     price: float
-    is_available: bool = True
 
 class TBookUpdate(BaseModel):
     name : str | None = None

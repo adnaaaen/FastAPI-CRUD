@@ -6,10 +6,8 @@ class TUser(BaseModel):
     email: str
     contact_no: str
 
-
 class TUserUpdate(BaseModel):
     name: str | None = None
     email: str | None = None
     contact_no: str | None = None
-
 
