@@ -1,2 +1,2 @@
-from .books import Book, BookUpdate
-from .users import User, UserUpdate
+from .books import TBook, TBookUpdate, TBookIn
+from .users import TUser, TUserUpdate

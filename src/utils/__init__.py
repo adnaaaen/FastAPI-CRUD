@@ -1,3 +1,2 @@
-from .base_abc import Crud
+from .base_abc import BaseCrud
 from .loggin_config import logger
-

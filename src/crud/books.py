@@ -1,53 +1,65 @@
 from sqlalchemy.orm import Session
-from models import Book
-from schemas import TBook, TBookUpdate
-from utils import Crud, logger
+from sqlalchemy.exc import SQLAlchemyError
+from src.models import Book
+from src.schemas import TBookIn, TBookUpdate, TBook
+from src.utils import BaseCrud, logger
 
 
-class BookCrud(Crud):
+class BookCrud(BaseCrud):
 
-    def create(self, db: Session, request: TBook) -> TBook:
+    async def create(self, db: Session, request: TBookIn) -> TBook | None:
         try:
-            new = Book(**request.dict())
-            db.add(new)
+            db_book = Book(**request.dict())
+            db.add(db_book)
             db.commit()
-            return new
-
-        except Exception as e:
+            return db_book
+        except SQLAlchemyError as s:
             db.rollback()
-            logger.error(f"unexpected error occured {e}")
+            logger.error(f"DataBase Error occurred when create book, {s}")
+            return None
+        except Exception as e:
+            logger.error(f"unexpected error occurred {e}")
+            return None
 
-
-    def read(self, db: Session, id: int) -> TBook:
+    async def read(self, db: Session, id: int) -> TBook | None:
         try:
             result = db.query(Book).filter(Book.id == id).first()
-            return result
-
-        except Exception as e:
+            return result if result else None
+        except SQLAlchemyError as s:
             db.rollback()
-            logger.error(f"unexpected error occured {e}")
+            logger.error(f"DataBase Error occurred when read book with ID: {id}, {s}")
+            return None
+        except Exception as e:
+            logger.error(f"unexpected error occurred {e}")
+            return None
 
-
-    def update(self, db: Session, id: int, request: TBookUpdate) -> None:
-
+    async def update(self, db: Session, id: int, request: TBookUpdate) -> TBook | None:
         try:
-            # TODO:
             result = db.query(Book).filter(Book.id == id).first()
+            if result:
+                for key, value in request.dict(exclude_none=True).items():
+                    setattr(result, key, value)
+                return result
+            return None
+        except SQLAlchemyError as s:
+            db.rollback()
+            logger.error(f"DataBase Error occurred when update book with ID: {id}, {s}")
+            return None
+        except Exception as e:
+            logger.error(f"unexpected error occurred {e}")
+            return None
 
-            # result.name = request.name if request.name is not None else result.name
-            # result.author = request.name if request.name is not None else result.author
-            # result.department = request.name if request.name is not None else result.department
-            # result.price = request.name if request.name is not None else result.price
-            # result.is_available = request.name if request.is_available is not None else result.is_available
-            # result.update_at = datetime.now()
-
-
-
-        pass
-        
-
-    def delete(self, db: Session, request: TBook) -> None:
-        raise NotImplementedError
-
-
-
+    async def delete(self, db: Session, id: int) -> bool:
+        try:
+            db_book = db.query(Book).filter(Book.id == id).first()
+            if db_book is None:
+                return False
+            db.delete(db_book)
+            return True
+        except SQLAlchemyError as s:
+            db.rollback()
+            logger.error(f"DataBase Error occurred when delete book with ID: {id}, {s}")
+            return False
+        except Exception as e:
+            logger.error(f"unexpected error occurred {e}")
+            return False
