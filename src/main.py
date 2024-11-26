@@ -1,21 +1,17 @@
-from sqlalchemy.orm import Session
-from src.dependency.db import Base, engine, get_db
-from fastapi import FastAPI, Depends
-from src.schemas.books import TBookCreate, TBook
-from src.crud import BooksCrud
+from src.dependency.db import Base, engine
+from fastapi import FastAPI
+from fastapi.responses import RedirectResponse
+from src.routes import books, users
 
 Base.metadata.create_all(bind=engine)
-app = FastAPI(title="Library")
+app = FastAPI(title="Library Management")
 
+@app.get("/")
+def doc_redirect() -> RedirectResponse:
+    return RedirectResponse("/docs")
 
-@app.post("/api/users", response_model=TBook)
-async def create_user(request: TBookCreate, db: Session = Depends(get_db)):
-    result = await BooksCrud.create(request=request, db=db)
-    return result
-
-
-# @app.patch("/api/users/{id}", response_model=TBook)
-# async dedf
+app.include_router(books.router, prefix="/api", tags=["Book"])
+# app.include_router(users.router, prefix="/api")
 
 
 #

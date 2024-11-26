@@ -39,6 +39,7 @@ class BookCrud(BaseCrud):
             if result:
                 for key, value in request.dict(exclude_none=True).items():
                     setattr(result, key, value)
+                db.commit()
                 return result
             return None
         except SQLAlchemyError as s:
@@ -55,6 +56,7 @@ class BookCrud(BaseCrud):
             if db_book is None:
                 return False
             db.delete(db_book)
+            db.commit()
             return True
         except SQLAlchemyError as s:
             db.rollback()
