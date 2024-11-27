@@ -10,8 +10,8 @@ app = FastAPI(title="Library Management")
 def doc_redirect() -> RedirectResponse:
     return RedirectResponse("/docs")
 
+app.include_router(users.router, prefix="/api", tags=["User"])
 app.include_router(books.router, prefix="/api", tags=["Book"])
-# app.include_router(users.router, prefix="/api")
 
 
 #

@@ -1,6 +1,6 @@
 <div align="center">
   
-# 📚 Library CRUD FastAPI
+# 📚 Library Management API in FastAPI
 
 This project is a CRUD application for managing a library's book collection, built using FastAPI and SQLite.
 </div>
@@ -14,9 +14,7 @@ This project is a CRUD application for managing a library's book collection, bui
   [![Pip](https://img.shields.io/badge/Pip-24.0-blue)](https://pip.pypa.io/)
 </div>
 
-<!--## 🚧 EndPoints-->
-<!--![Screenshot 2024-07-15 115055](https://github.com/user-attachments/assets/32fe10b1-c4ea-4247-93b6-bacabb90a9c7)-->
-
+## 🚧 EndPoints
 
 ## 🚀 Installation
 
@@ -47,17 +45,14 @@ Create a `.env` file in the root directory of your project and add the following
    ```sh
     DATABASE_URL="sqlite:///database.db"
 ```
+
 ## ⚙️ Running the Application
 
 1. **Start the FastAPI server**:
+
 ```bash
-uvicorn main:app --reload --port 8000 --host localhost
+uvicorn src.main:app --reload --port 8000 --host localhost
 ```
 
 2. **Access the API documentation**:
 Open your browser and navigate to `http://localhost:8000/docs` to access the interactive API documentation (Swagger UI).
-
-
-
-
-

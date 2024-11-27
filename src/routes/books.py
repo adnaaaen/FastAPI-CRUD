@@ -2,7 +2,7 @@ from typing import Any
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from src.dependency.db import get_db
-from src.schemas.books import TBook, TBookIn, TBookUpdate
+from src.schemas import TBook, TBookIn, TBookUpdate
 from src.crud import BooksCrud
 
 router = APIRouter()
