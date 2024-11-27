@@ -15,6 +15,7 @@ This project is a CRUD application for managing a library's book collection, bui
 </div>
 
 ## 🚧 EndPoints
+![screenshot_28-Nov-2024_00-55-55](https://github.com/user-attachments/assets/0d9bef74-4e82-45fa-aae7-5e8573cffdc3)
 
 ## 🚀 Installation
 
@@ -55,4 +56,4 @@ uvicorn src.main:app --reload --port 8000 --host localhost
 ```
 
 2. **Access the API documentation**:
-Open your browser and navigate to `http://localhost:8000/docs` to access the interactive API documentation (Swagger UI).
+Open your browser and navigate to `http://localhost:8000/` to access the interactive API documentation (Swagger UI).
