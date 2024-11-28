@@ -22,8 +22,8 @@ This project is a CRUD application for managing a library's book collection, bui
 1. **Clone the repository**:
 
     ```sh
-    git clone https://github.com/adnaaaen/library-crud-fastapi.git
-    cd library-crud-fastapi
+    git clone https://github.com/adnaaaen/library-api.git
+    cd library-api
     ```
 
 2. **Create and activate a virtual environment**:
